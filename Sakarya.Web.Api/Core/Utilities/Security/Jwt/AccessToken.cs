@@ -1,0 +1,13 @@
+﻿using System;
+using System.Collections.Generic;
+using Core.Utilities.Jwt;
+
+namespace Core.Utilities.Security.Jwt
+{
+    public class AccessToken : IAccessToken
+    {
+        public List<string> Claims { get; set; }
+        public string Token { get; set; }
+        public DateTime Expiration { get; set; }
+    }
+}
