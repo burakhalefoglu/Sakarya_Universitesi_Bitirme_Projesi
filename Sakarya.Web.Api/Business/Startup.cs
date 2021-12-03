@@ -16,6 +16,7 @@ using Core.Extensions;
 using Core.Utilities.ElasticSearch;
 using Core.Utilities.IoC;
 using Core.Utilities.MessageBrokers.RabbitMq;
+using Core.Utilities.Security.Jwt;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework.Contexts;
 using DataAccess.Concrete.MongoDb;
@@ -65,6 +66,7 @@ namespace Business
             });
 
             services.AddSingleton<ConfigurationManager>();
+            services.AddTransient<ITokenHelper, JwtHelper>();
 
             services.AddTransient<IElasticSearch, ElasticSearchManager>();
 
@@ -89,13 +91,11 @@ namespace Business
         public void ConfigureDevelopmentServices(IServiceCollection services)
         {
             ConfigureServices(services);
+            services.AddTransient<IMlInfoModelRepository>(x=> new MlInfoModelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.MlInfoModels));
             services.AddTransient<IUserRepository>(x =>
                 new UserRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.Users));
             services.AddTransient<IOperationClaimRepository>(x =>
                 new OperationClaimRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.OperationClaims));
-            services.AddTransient<IMostUsedWordsModelRepository>(x =>
-                new MostUsedWordsModelRepository(x.GetRequiredService<MongoDbContextBase>(),
-                    Collections.MostUsedWordsModels));
             services.AddTransient<IClientModelRepository>(x =>
                 new ClientModelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ClientModels));
 
@@ -112,13 +112,11 @@ namespace Business
         public void ConfigureStagingServices(IServiceCollection services)
         {
             ConfigureServices(services);
+            services.AddTransient<IMlInfoModelRepository>(x=> new MlInfoModelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.MlInfoModels));
             services.AddTransient<IUserRepository>(x =>
                 new UserRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.Users));
             services.AddTransient<IOperationClaimRepository>(x =>
                 new OperationClaimRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.OperationClaims));
-            services.AddTransient<IMostUsedWordsModelRepository>(x =>
-                new MostUsedWordsModelRepository(x.GetRequiredService<MongoDbContextBase>(),
-                    Collections.MostUsedWordsModels));
             services.AddTransient<IClientModelRepository>(x =>
                 new ClientModelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ClientModels));
             services.AddTransient<IMessageBroker, KafkaMessageBroker>();
@@ -135,13 +133,11 @@ namespace Business
         public void ConfigureProductionServices(IServiceCollection services)
         {
             ConfigureServices(services);
+            services.AddTransient<IMlInfoModelRepository>(x=> new MlInfoModelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.MlInfoModels));
             services.AddTransient<IUserRepository>(x =>
                 new UserRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.Users));
             services.AddTransient<IOperationClaimRepository>(x =>
                 new OperationClaimRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.OperationClaims));
-            services.AddTransient<IMostUsedWordsModelRepository>(x =>
-                new MostUsedWordsModelRepository(x.GetRequiredService<MongoDbContextBase>(),
-                    Collections.MostUsedWordsModels));
             services.AddTransient<IClientModelRepository>(x =>
                 new ClientModelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ClientModels));
             services.AddTransient<IMessageBroker, KafkaMessageBroker>();

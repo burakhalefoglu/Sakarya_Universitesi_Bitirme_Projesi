@@ -2,70 +2,89 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
-import { AppRoutingModule } from './app.routing';
 import { AppComponent } from './app.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { JwtModule } from '@auth0/angular-jwt';
-import { ComponentsModule } from './core/modules/components.module';
-import { AdminLayoutComponent } from './core/components/app/layouts/admin-layout/admin-layout.component';
+import { AdminLayoutComponent } from './core/components/layouts/admin-layout/admin-layout.component';
 import { AlertifyService } from './core/services/alertify.service';
-import { AuthService } from './core/components/admin/login/services/auth.service';
+import { AuthService } from './core/components/auth/login/services/auth.service';
 import { LocalStorageService } from './core/services/local-storage.service';
 import { LoginGuard } from './core/guards/login-guard';
 import { AuthInterceptorService } from './core/interceptors/auth-interceptor.service';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { TranslationService } from './core/services/translation.service';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-
-
-// i18 kullanıclak ise aşağıdaki metod aktif edilecek
-
-//  export function HttpLoaderFactory(http: HttpClient) {
-//    
-//    var asd=new TranslateHttpLoader(http, '../../../../assets/i18n/', '.json'); 
-//    return asd;
-//  }
+import {RouterModule} from '@angular/router';
+import {CommonModule} from '@angular/common';
+import {AdminLayoutRoutes} from './core/components/layouts/admin-layout/admin-layout.routing';
+import {MatButtonModule} from '@angular/material/button';
+import {MatRippleModule} from '@angular/material/core';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {DashboardComponent} from './core/components/dashboard/dashboard.component';
+import {LoginComponent} from './core/components/auth/login/login.component';
+import {FooterComponent} from './core/components/footer/footer.component';
+import {NavbarComponent} from './core/components/navbar/navbar.component';
+import {RegisterComponent} from './core/components/auth/register/register.component';
+import {AuthComponent} from './core/components/auth/auth.component';
 
 
 export function tokenGetter() {
-  return localStorage.getItem("token");
+  return localStorage.getItem('token');
 }
 
 
 @NgModule({
   imports: [
+    RouterModule,
+    CommonModule,
+    RouterModule.forChild(AdminLayoutRoutes),
+    FormsModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatRippleModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatTooltipModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatCheckboxModule,
+    NgbModule,
+    NgMultiSelectDropDownModule,
+    SweetAlert2Module,
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    ComponentsModule,
-    RouterModule,
-    AppRoutingModule,
     NgMultiSelectDropDownModule.forRoot(),
     SweetAlert2Module.forRoot(),
     NgbModule,
+    RouterModule.forRoot([]),
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter
       }
-    }),
-     TranslateModule.forRoot({
-       loader:{
-         provide:TranslateLoader,
-         //useFactory:HttpLoaderFactory, //i18 kullanılacak ise useClass kapatılıp yukarıda bulunan HttpLoaderFactory ve bu satır aktif edilecek
-         useClass:TranslationService,
-         deps:[HttpClient]
-       }
-       
-    })
-      
-  ],
+    })],
   declarations: [
     AppComponent,
-    AdminLayoutComponent
+    AdminLayoutComponent,
+    DashboardComponent,
+    LoginComponent,
+    FooterComponent,
+    NavbarComponent,
+    RegisterComponent,
+    AuthComponent
+  ],
+  exports: [
+    FooterComponent,
+    NavbarComponent,
   ],
   providers: [AlertifyService, AuthService, LocalStorageService, LoginGuard, AuthInterceptorService,
     {

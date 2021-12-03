@@ -35,6 +35,7 @@
    <WCFMetadata Include="Connected Services" />
  </ItemGroup>
  <ItemGroup>
+   <Folder Include="Handlers\ApiInfoModels\Commands\" />
    <Folder Include="Services\" />
  </ItemGroup> 
 </Project>

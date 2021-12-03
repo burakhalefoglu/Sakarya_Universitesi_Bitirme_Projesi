@@ -23,5 +23,6 @@ namespace DataAccess.Concrete.MongoDb.Collections
         public static string MostUsedWordsModels => "mostUsedWordsModels";
         public static string OperationClaims => "operationClaims";
         public static string Users => "users";
+        public static string MlInfoModels => "mlInfoModels";
     }
 }

@@ -61,6 +61,7 @@ namespace WebAPI.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterUserCommand createUser)
         {
+
             var result = await Mediator.Send(createUser);
 
             if (result.Success) return Ok(result);

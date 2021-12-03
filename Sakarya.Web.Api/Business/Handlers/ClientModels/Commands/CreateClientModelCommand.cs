@@ -22,6 +22,8 @@ namespace Business.Handlers.ClientModels.Commands
     {
         public string UId { get; set; }
         public int IsPleased { get; set; }
+        public string Tweet { get; set; }
+        public string MaskedName { get; set; }
 
         public class CreateClientModelCommandHandler : IRequestHandler<CreateClientModelCommand, IResult>
         {
@@ -50,7 +52,9 @@ namespace Business.Handlers.ClientModels.Commands
                 {
                     UId = HexStringHelper.GenerateHexString(16),
                     IsPleased = request.IsPleased,
-                    DateTime = DateTime.Now
+                    DateTime = DateTime.Now,
+                    MaskedName = request.MaskedName,
+                    Tweet = request.Tweet
                 };
 
                 await _clientModelRepository.AddAsync(addedClientModel);
@@ -58,5 +62,6 @@ namespace Business.Handlers.ClientModels.Commands
                 return new SuccessResult(Messages.Added);
             }
         }
+
     }
 }

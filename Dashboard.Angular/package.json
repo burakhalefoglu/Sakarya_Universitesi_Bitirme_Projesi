@@ -1,5 +1,5 @@
 {
-  "name": "material-dashboard-angular",
+  "name": "Angular-Sakarya-University",
   "version": "2.5.0",
   "license": "MIT",
   "scripts": {
@@ -80,7 +80,7 @@
     "codelyzer": "6.0.1",
     "jasmine-core": "3.6.0",
     "jasmine-spec-reporter": "6.0.0",
-    "karma": "5.2.3",
+    "karma": "^6.3.9",
     "karma-chrome-launcher": "3.1.0",
     "karma-cli": "2.0.0",
     "karma-coverage-istanbul-reporter": "3.0.3",

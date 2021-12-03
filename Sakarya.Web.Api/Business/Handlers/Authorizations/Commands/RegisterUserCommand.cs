@@ -22,12 +22,12 @@ using MediatR;
 
 namespace Business.Handlers.Authorizations.Commands
 {
-    public class RegisterUserCommand : IRequest<IResult>
+    public class RegisterUserCommand : IRequest<IDataResult<AccessToken>>
     {
         public string Email { get; set; }
         public string Password { get; set; }
 
-        public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, IResult>
+        public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, IDataResult<AccessToken>>
         {
             private readonly IMediator _mediator;
             private readonly ITokenHelper _tokenHelper;
@@ -47,12 +47,12 @@ namespace Business.Handlers.Authorizations.Commands
             [CacheRemoveAspect("Get")]
             [LogAspect(typeof(LogstashLogger))]
             [TransactionScopeAspectAsync]
-            public async Task<IResult> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+            public async Task<IDataResult<AccessToken>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
             {
                 var userExits = await _userRepository.GetByFilterAsync(u => u.Email == request.Email);
 
                 if (userExits != null)
-                    return new ErrorResult(Messages.DefaultError);
+                    return new ErrorDataResult<AccessToken>(Messages.DefaultError);
 
                 HashingHelper.CreatePasswordHash(request.Password, out var passwordSalt, out var passwordHash);
                 var user = new User

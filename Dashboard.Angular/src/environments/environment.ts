@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  getApiUrl: "https://localhost:44375/WebAPI/api",
+  getApiUrl: 'https://localhost:5050/api',
   getDropDownSetting: {
     singleSelection: false,
     idField: 'id',

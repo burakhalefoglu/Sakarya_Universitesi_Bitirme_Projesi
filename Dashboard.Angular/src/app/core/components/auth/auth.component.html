@@ -1,0 +1,16 @@
+<div class="main-content ">
+    <div class="container-fluid align-middle">
+        <div class="row">
+            <div class="col-md-5 "></div>
+            <button mat-raised-button type="submit" class="btn btn-danger" style="width : 20em;"
+                    (click)="changeAuthStatus()">{{name}}</button>
+            </div>
+        </div>
+    </div>
+<div *ngIf="!isAuth">
+    <app-register></app-register>
+</div>
+
+<div *ngIf="isAuth">
+    <app-login></app-login>
+</div>

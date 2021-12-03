@@ -27,7 +27,6 @@ namespace WebAPI
             var operationClaimRepository = ServiceTool.ServiceProvider.GetService<IOperationClaimRepository>();
             var createOcResult = new CreateOperationClaimsInternalCommandHandler(operationClaimRepository).Handle(
                 new CreateOperationClaimsInternalCommand(), new CancellationToken());
-
             result.Wait();
             createOcResult.Wait();
         }
