@@ -8,25 +8,25 @@ using FluentAssertions;
 using MediatR;
 using Moq;
 using NUnit.Framework;
-using static Business.Handlers.ApiInfoModels.Queries.GetApiInfoModelQuery;
+using static Business.Handlers.ApiInfoModels.Queries.GetApiInfoModelByTypeQuery;
 
 namespace Tests.Business.Handlers
 {
     [TestFixture]
     public class ApiInfoModelHandlerTests
     {
-        Mock<IMlInfoModelRepository> _mlInfoModelRepository;
-        Mock<IMediator> _mediator;
+        private Mock<IApiInfoModelRepository> _mlInfoModelRepository;
+        private Mock<IMediator> _mediator;
 
-        private GetApiInfoModelQueryHandler _getMlInfoModelQueryHandler;
+        private GetApiInfoModelByTypeQueryHandler _getMlInfoModelQueryHandler;
 
         [SetUp]
         public void Setup()
         {
-            _mlInfoModelRepository = new Mock<IMlInfoModelRepository>();
+            _mlInfoModelRepository = new Mock<IApiInfoModelRepository>();
             _mediator = new Mock<IMediator>();
 
-            _getMlInfoModelQueryHandler = new GetApiInfoModelQueryHandler(_mlInfoModelRepository.Object, _mediator.Object);
+            _getMlInfoModelQueryHandler = new GetApiInfoModelByTypeQueryHandler(_mlInfoModelRepository.Object, _mediator.Object);
 
         }
 
@@ -34,14 +34,14 @@ namespace Tests.Business.Handlers
         public async Task MlInfoModel_GetQuery_Success()
         {
             //Arrange
-            var query = new GetApiInfoModelQuery
+            var query = new GetApiInfoModelByTypeQuery()
             {
                 Type = "TwitterApi"
             };
 
             _mlInfoModelRepository.Setup(x => x.GetByFilterAsync(It.IsAny<Expression<Func<ApiInfoModel, bool>>>())).ReturnsAsync(new ApiInfoModel()
             {
-                MlResultRate = 1,
+                MlResultAccuracyRate = 1,
                 RemainingRequest = 500000,
                 TotalRequestLimit = 500000
             }
@@ -53,7 +53,7 @@ namespace Tests.Business.Handlers
 
             //Asset
             x.Success.Should().BeTrue();
-            x.Data.MlResultRate.Should().Be(1);
+            x.Data.MlResultAccuracyRate.Should().Be(1);
 
         }
     }

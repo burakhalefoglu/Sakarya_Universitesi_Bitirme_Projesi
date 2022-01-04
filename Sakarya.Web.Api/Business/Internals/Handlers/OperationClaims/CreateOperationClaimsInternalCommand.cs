@@ -38,9 +38,12 @@ namespace Business.Internals.Handlers.OperationClaims
             {
                 var operationClaimNameList = new List<string>
                 {
-                    "GetClientModelQuery",
-                    "GetClientModelsQuery",
-                    "GetApiInfoModelQuery"
+                    "GetPositiveSentimentRateQuery",
+                    "GetSentimentRateByDateFilterQuery",
+                    "GetLastClientsByCountQuery",
+                    "GetTotalClientCountQuery",
+                    "GetApiInfoModelByTypeQuery",
+                    
                 };
                 var operationClaims = new List<OperationClaim>();
 

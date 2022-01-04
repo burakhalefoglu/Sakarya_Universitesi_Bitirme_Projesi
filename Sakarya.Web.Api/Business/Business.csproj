@@ -36,6 +36,7 @@
  </ItemGroup>
  <ItemGroup>
    <Folder Include="Handlers\ApiInfoModels\Commands\" />
+   <Folder Include="Handlers\ClientModels\Commands\" />
    <Folder Include="Services\" />
  </ItemGroup> 
 </Project>

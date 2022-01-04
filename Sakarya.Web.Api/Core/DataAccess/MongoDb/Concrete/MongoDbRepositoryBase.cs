@@ -106,6 +106,16 @@ namespace Core.DataAccess.MongoDb.Concrete
             });
         }
 
+        public virtual async Task<IQueryable<T>> GetListByLimitAsync(int limit, Expression<Func<T, bool>> predicate = null)
+        {
+            return await Task.Run(() =>
+            {
+                return predicate == null
+                    ? _collection.AsQueryable().Take(limit)
+                    : _collection.AsQueryable().Where(predicate).Take(limit);
+            });
+        }
+
         public async Task<T> GetByFilterAsync(Expression<Func<T, bool>> predicate)
         {
             return await Task.Run(() => { return _collection.Find(predicate).FirstOrDefault(); });

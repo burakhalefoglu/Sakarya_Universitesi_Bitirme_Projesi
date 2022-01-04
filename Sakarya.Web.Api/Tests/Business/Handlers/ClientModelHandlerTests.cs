@@ -5,7 +5,6 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Business.Constants;
-using Business.Handlers.ClientModels.Commands;
 using Business.Handlers.ClientModels.Queries;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -14,9 +13,10 @@ using MediatR;
 using MongoDB.Bson;
 using Moq;
 using NUnit.Framework;
-using static Business.Handlers.ClientModels.Queries.GetClientModelQuery;
-using static Business.Handlers.ClientModels.Queries.GetClientModelsQuery;
-using static Business.Handlers.ClientModels.Commands.CreateClientModelCommand;
+using static Business.Handlers.ClientModels.Queries.GetLastClientsByCountQuery;
+using static Business.Handlers.ClientModels.Queries.GetPositiveSentimentRateQuery;
+using static Business.Handlers.ClientModels.Queries.GetSentimentRateByDateFilterQuery;
+using static Business.Handlers.ClientModels.Queries.GetTotalClientCountQuery;
 
 namespace Tests.Business.Handlers
 {
@@ -30,121 +30,192 @@ namespace Tests.Business.Handlers
             _mediator = new Mock<IMediator>();
 
 
-            _getClientModelQueryHandler =
-                new GetClientModelQueryHandler(_clientModelRepository.Object, _mediator.Object);
-            _getClientModelsQueryHandler =
-                new GetClientModelsQueryHandler(_clientModelRepository.Object, _mediator.Object);
-            _createClientModelCommandHandler =
-                new CreateClientModelCommandHandler(_clientModelRepository.Object, _mediator.Object);
+            _getLastClientsByCountQueryHandler =
+                new GetLastClientsByCountQueryHandler( _clientModelRepository.Object, _mediator.Object);
+            _getTotalClientCountQueryHandler =
+                new GetTotalClientCountQueryHandler( _clientModelRepository.Object, _mediator.Object);
+            _getPositiveSentimentRateQueryHandler =
+                new GetPositiveSentimentRateQueryHandler(_clientModelRepository.Object, _mediator.Object);
+            _getSentimentRateByDateFilterQueryHandler =
+                new GetSentimentRateByDateFilterQueryHandler(_clientModelRepository.Object, _mediator.Object);
         }
 
         private Mock<IClientModelRepository> _clientModelRepository;
         private Mock<IMediator> _mediator;
 
-        private GetClientModelQueryHandler _getClientModelQueryHandler;
-        private GetClientModelsQueryHandler _getClientModelsQueryHandler;
-        private CreateClientModelCommandHandler _createClientModelCommandHandler;
+        private GetLastClientsByCountQueryHandler _getLastClientsByCountQueryHandler;
+        private GetPositiveSentimentRateQueryHandler _getPositiveSentimentRateQueryHandler;
+        private GetSentimentRateByDateFilterQueryHandler _getSentimentRateByDateFilterQueryHandler;
+        private GetTotalClientCountQueryHandler _getTotalClientCountQueryHandler;
 
         [Test]
-        public async Task ClientModel_GetQuery_Success()
+        public async Task GetLastClientsByCount_GetQuery_Success()
         {
             //Arrange
-            var query = new GetClientModelQuery
+            var query = new GetLastClientsByCountQuery
             {
-                UId = "12C41A215B4"
+               Count = 2
             };
 
             _clientModelRepository.Setup(x =>
-                    x.GetByFilterAsync(It.IsAny<Expression<Func<ClientModel, bool>>>()))
-                .ReturnsAsync(new ClientModel
-                {
-                    UId = "12C41A215B4",
-                    IsPleased = 0,
-                    DateTime = DateTime.Now
-                });
-
-            //Act
-            var x = await _getClientModelQueryHandler.Handle(query, new CancellationToken());
-
-            //Asset
-            x.Success.Should().BeTrue();
-            x.Data.UId.Should().Be("12C41A215B4");
-        }
-
-        [Test]
-        public async Task ClientModel_GetQueries_Success()
-        {
-            //Arrange
-            var query = new GetClientModelsQuery();
-
-            _clientModelRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<ClientModel, bool>>>()))
+                    x.GetListByLimitAsync(It.IsAny<int>(),
+                        It.IsAny<Expression<Func<ClientModel, bool>>>()))
                 .ReturnsAsync(new List<ClientModel>
                 {
                     new()
                     {
-                        DateTime = DateTime.Now,
-                        IsPleased = 0,
-                        UId = "12C41A215B4"
+                        Name = "ABC***"
+                    },
+                    
+                    new()
+                    {
+                        Name = "CDE***"
+                    }
+
+                }.AsQueryable());
+
+            //Act
+            var x = await _getLastClientsByCountQueryHandler.Handle(query, new CancellationToken());
+
+            //Asset
+            x.Success.Should().BeTrue();
+            x.Data.Count().Should().Be(2);
+        }
+
+        [Test]
+        public async Task GetTotalClientCount_GetQuery_Success()
+        {
+            //Arrange
+            var query = new GetTotalClientCountQuery();
+
+            _clientModelRepository.Setup(x =>
+                    x.GetListAsync(It.IsAny<Expression<Func<ClientModel, bool>>>()))
+                .ReturnsAsync(new List<ClientModel>
+                {
+                    new()
+                    {
+                        Name = "ABC***"
                     },
 
                     new()
                     {
-                        DateTime = DateTime.Now,
-                        IsPleased = 1,
-                        UId = "82A41A215B9"
+                        Name = "CDE***"
                     }
+
                 }.AsQueryable());
 
             //Act
-            var x = await _getClientModelsQueryHandler.Handle(query, new CancellationToken());
+            var x = await _getTotalClientCountQueryHandler.Handle(query, new CancellationToken());
 
             //Asset
             x.Success.Should().BeTrue();
-            x.Data.ToList().Count.Should().BeGreaterThan(1);
+            x.Data.Should().Be(2);
         }
-
         [Test]
-        public async Task ClientModel_CreateCommand_Success()
-        {
-            var command = new CreateClientModelCommand
-            {
-                UId = "TestUId"
-            };
-
-            _clientModelRepository.Setup(x => x.GetByIdAsync(It.IsAny<ObjectId>()))
-                .ReturnsAsync((ClientModel) null);
-
-            _clientModelRepository.Setup(x => x.Add(It.IsAny<ClientModel>()));
-
-            var x = await _createClientModelCommandHandler.Handle(command, new CancellationToken());
-
-
-            x.Success.Should().BeTrue();
-            x.Message.Should().Be(Messages.Added);
-        }
-
-        [Test]
-        public async Task ClientModel_CreateCommand_NameAlreadyExist()
+        public async Task GetPositiveSentimentRateQuery_GetQueries_Success()
         {
             //Arrange
-            var command = new CreateClientModelCommand
+            var query = new GetPositiveSentimentRateQuery();
+
+            _clientModelRepository.Setup(x => x.GetListAsync(null))
+                .ReturnsAsync(new List<ClientModel>
+                {
+                    new()
+                    {
+                        Name = "ABC***"
+                    },
+
+                    new()
+                    {
+                        Name = "CDE***"
+                    },
+
+                    new()
+                    {
+                        Name = "GHE***"
+                    },
+                    new()
+                    {
+                        Name = "XYZ***"
+                    },
+
+
+                }.AsQueryable());
+
+                _clientModelRepository.Setup(x => x.GetListAsync(a => a.user_sentiment == 1))
+                .ReturnsAsync(new List<ClientModel>
+                {
+                    new()
+                    {
+                        Name = "ABC***"
+                    }
+
+                }.AsQueryable());
+            //Act
+            var x = await _getPositiveSentimentRateQueryHandler.Handle(query, new CancellationToken());
+
+            //Asset
+            x.Success.Should().BeTrue();
+            x.Data.Should().Be(25);
+        }
+
+
+        [Test]
+        public async Task GetSentimentRateByDateFilter_GetQuery_Success()
+        {
+            //Arrange
+            var query = new GetSentimentRateByDateFilterQuery
             {
-                UId = "TestUId"
+                startDate = 20211207,
+                finishDate = 20211212
             };
 
-            _clientModelRepository.Setup(x => x.GetByFilterAsync(
-                    It.IsAny<Expression<Func<ClientModel, bool>>>()))
-                .ReturnsAsync(new ClientModel
+            _clientModelRepository.Setup(a => a.GetListAsync(x => x.createdAt >= query.startDate &&
+                                                                  x.createdAt <= query.finishDate))
+                .ReturnsAsync(new List<ClientModel>
                 {
-                    UId = "TestUId"
-                });
+                    new()
+                    {
+                        Name = "ABC***"
+                    },
 
-            _clientModelRepository.Setup(x => x.Add(It.IsAny<ClientModel>()));
+                    new()
+                    {
+                        Name = "CDE***"
+                    },
 
-            var x = await _createClientModelCommandHandler.Handle(command, new CancellationToken());
+                    new()
+                    {
+                        Name = "GHE***"
+                    },
+                    new()
+                    {
+                        Name = "XYZ***"
+                    },
 
-            x.Success.Should().BeFalse();
-            x.Message.Should().Be(Messages.NameAlreadyExist);
+
+                }.AsQueryable());
+
+            _clientModelRepository.Setup(a =>
+                    a.GetListAsync(x => x.user_sentiment == 1
+                                          && x.createdAt >= query.startDate
+                                          && x.createdAt <= query.finishDate))
+                .ReturnsAsync(new List<ClientModel>
+                {
+                    new()
+                    {
+                        Name = "ABC***"
+                    }
+
+                }.AsQueryable());
+
+            //Act
+            var x = await _getSentimentRateByDateFilterQueryHandler.Handle(query, new CancellationToken());
+
+            //Asset
+            x.Success.Should().BeTrue();
+            x.Data.Should().Be(25);
         }
+
     }
 }

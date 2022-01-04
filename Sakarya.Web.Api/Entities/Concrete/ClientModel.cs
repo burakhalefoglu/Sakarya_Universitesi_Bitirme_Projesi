@@ -5,10 +5,14 @@ namespace Entities.Concrete
 {
     public class ClientModel : DocumentDbEntity
     {
-        public string UId { get; set; }
-        public string MaskedName { get; set; }
-        public int IsPleased { get; set; }
-        public string Tweet { get; set; }
-        public DateTime DateTime { get; set; }
+        public string name { get; set; }
+        public int likeCount { get; set; }
+        public int quoteCount { get; set; }
+        public int replyCount { get; set; }
+        public int retweetCount { get; set; }
+        public string text { get; set; }
+        public string original_text { get; set; }
+        public int user_sentiment { get; set; }
+        public int createdAt { get; set; }
     }
 }

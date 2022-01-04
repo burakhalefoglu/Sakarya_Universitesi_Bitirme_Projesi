@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
-import { AuthService } from './core/components/auth/login/services/auth.service';
+import { AuthService } from './components/auth/login/services/auth.service';
 
 export let browserRefresh = false;
 

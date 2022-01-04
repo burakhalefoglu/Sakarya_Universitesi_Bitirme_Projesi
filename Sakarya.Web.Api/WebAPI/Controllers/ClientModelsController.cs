@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Business.Handlers.ClientModels.Commands;
 using Business.Handlers.ClientModels.Queries;
 using Core.Utilities.Results;
 using Entities.Concrete;
@@ -25,10 +25,43 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<ClientModel>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
-        [HttpGet("getall")]
-        public async Task<IActionResult> GetList()
+        [HttpGet("getlastclientsbycount")]
+        public async Task<IActionResult> GetLastClientsByCount(int count)
         {
-            var result = await Mediator.Send(new GetClientModelsQuery());
+            var result = await Mediator.Send(new GetLastClientsByCountQuery{ Count = count });
+            if (result.Success) return Ok(result);
+            return BadRequest(result);
+        }
+        /// <summary>
+        ///     List ClientModels
+        /// </summary>
+        /// <remarks>ClientModels</remarks>
+        /// <return>List ClientModels</return>
+        /// <response code="200"></response>
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<int>>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
+        [HttpGet("getpositivesentimentrate")]
+        public async Task<IActionResult> GetPositiveSentimentRate()
+        {
+            var result = await Mediator.Send(new GetPositiveSentimentRateQuery());
+            if (result.Success) return Ok(result);
+            return BadRequest(result);
+        }
+
+        /// <summary>
+        ///     List ClientModels
+        /// </summary>
+        /// <remarks>ClientModels</remarks>
+        /// <return>List ClientModels</return>
+        /// <response code="200"></response>
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<IEnumerable<int>>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
+        [HttpGet("gettotalclientcount")]
+        public async Task<IActionResult> GetTotalClientCount()
+        {
+            var result = await Mediator.Send(new GetTotalClientCountQuery());
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
@@ -40,30 +73,19 @@ namespace WebAPI.Controllers
         /// <return>ClientModels List</return>
         /// <response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<ClientModel>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<int>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
-        [HttpGet("getbyid")]
-        public async Task<IActionResult> GetById(string uId)
+        [HttpGet("getpositivesentimentratebydate")]
+        public async Task<IActionResult> GetPositiveSentimentRateByDate(int startDate, int finishDate)
         {
-            var result = await Mediator.Send(new GetClientModelQuery {UId = uId});
+            var result = await Mediator.Send(new GetSentimentRateByDateFilterQuery
+            {
+                startDate = startDate,
+                finishDate = finishDate
+            });
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
 
-        /// <summary>
-        ///     Add ClientModel.
-        /// </summary>
-        /// <param name="createClientModel"></param>
-        /// <returns></returns>
-        [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IResult))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
-        [HttpPost]
-        public async Task<IActionResult> Add([FromBody] CreateClientModelCommand createClientModel)
-        {
-            var result = await Mediator.Send(createClientModel);
-            if (result.Success) return Ok(result);
-            return BadRequest(result);
-        }
     }
 }

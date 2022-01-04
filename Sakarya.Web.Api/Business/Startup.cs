@@ -91,7 +91,7 @@ namespace Business
         public void ConfigureDevelopmentServices(IServiceCollection services)
         {
             ConfigureServices(services);
-            services.AddTransient<IMlInfoModelRepository>(x=> new MlInfoModelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.MlInfoModels));
+            services.AddTransient<IApiInfoModelRepository>(x=> new ApiInfoModelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ApiInfoModels));
             services.AddTransient<IUserRepository>(x =>
                 new UserRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.Users));
             services.AddTransient<IOperationClaimRepository>(x =>
@@ -112,7 +112,7 @@ namespace Business
         public void ConfigureStagingServices(IServiceCollection services)
         {
             ConfigureServices(services);
-            services.AddTransient<IMlInfoModelRepository>(x=> new MlInfoModelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.MlInfoModels));
+            services.AddTransient<IApiInfoModelRepository>(x=> new ApiInfoModelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ApiInfoModels));
             services.AddTransient<IUserRepository>(x =>
                 new UserRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.Users));
             services.AddTransient<IOperationClaimRepository>(x =>
@@ -133,7 +133,7 @@ namespace Business
         public void ConfigureProductionServices(IServiceCollection services)
         {
             ConfigureServices(services);
-            services.AddTransient<IMlInfoModelRepository>(x=> new MlInfoModelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.MlInfoModels));
+            services.AddTransient<IApiInfoModelRepository>(x=> new ApiInfoModelRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.ApiInfoModels));
             services.AddTransient<IUserRepository>(x =>
                 new UserRepository(x.GetRequiredService<MongoDbContextBase>(), Collections.Users));
             services.AddTransient<IOperationClaimRepository>(x =>

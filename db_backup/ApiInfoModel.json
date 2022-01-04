@@ -1,0 +1,22 @@
+[{
+  "_id": {
+    "$oid": "61b643f2f34dd88a2adcbd04"
+  },
+  "TypeKey": "TwitterApi",
+  "TotalRequestLimit": 0,
+  "RemainingRequest": 0,
+  "MlResultAccuracyRate": 75.84606999722793,
+  "MlResultF1Rate": 75.8491134267859,
+  "MlResultROCRate": 75.83797787585628,
+  "TruePositive": 166969,
+  "TrueNegative": 155888,
+  "FalseNegative": 50379,
+  "FalsePositive": 52438,
+  "ErrorRate": 24,
+  "SensivityRate": 76,
+  "SpecifityRate": 74,
+  "PrecisionRate": 76,
+  "PrevalenceRate": 51,
+  "RecalRate": 76,
+  "MachineLearningModelName": "LogisticRegression"
+}]

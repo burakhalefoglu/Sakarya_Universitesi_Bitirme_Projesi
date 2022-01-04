@@ -24,5 +24,6 @@ namespace DataAccess.Concrete.MongoDb.Collections
         public static string OperationClaims => "operationClaims";
         public static string Users => "users";
         public static string MlInfoModels => "mlInfoModels";
+        public static string ApiInfoModels => "apiInfoModels";
     }
 }

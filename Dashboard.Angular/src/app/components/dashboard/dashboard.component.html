@@ -1,0 +1,208 @@
+<app-navbar></app-navbar>
+<div>
+    <p></p>
+</div>
+<div class="main-content">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-lg-2 col-md-4 col-sm-6">
+              <div class="card card-stats">
+                  <div class="card-header card-header-danger card-header-icon">
+                      <div class="card-icon">
+                          <i class="material-icons">equalizer</i>
+                      </div>
+                      <p class="card-category">Sensivity Rate</p>
+                      <h5 class="card-title">{{apiInfoModel.sensivityRate}}</h5>
+                      <br>
+
+                      <p class="card-category">Specifity Rate</p>
+                      <h5 class="card-title">{{apiInfoModel.specifityRate}}</h5>
+                      <br>
+
+                      <p class="card-category">Precision Rate</p>
+                      <h5 class="card-title">{{apiInfoModel.precisionRate}}</h5>
+                      <br>
+
+                      <p class="card-category">Prevalence Rate</p>
+                      <h5 class="card-title">{{apiInfoModel.prevalenceRate}}</h5>
+                      <br>
+
+                      <p class="card-category">Recal Rate</p>
+                      <h5 class="card-title">{{apiInfoModel.recalRate}}</h5>
+                      <br>
+                  </div>
+                  <div class="card-footer">
+                      <div class="stats">
+                          <i class="material-icons">update</i> Just Updated
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-2 col-md-4 col-sm-6">
+              <div class="card card-stats">
+                  <div class="card-header card-header-info  card-header-icon">
+                      <div class="card-icon">
+                          <i class="material-icons">precision_manufacturing</i>
+                      </div>
+                      <p class="card-category">AccuracyRate</p>
+                      <h4 class="card-title">{{apiInfoModel.mlResultAccuracyRate}}</h4>
+                      <br>
+
+                      <p class="card-category">MlF1Rate</p>
+                      <h4 class="card-title">{{apiInfoModel.mlResultF1Rate}}</h4>
+                      <br>
+
+                      <p class="card-category">ROCRate</p>
+                      <h4 class="card-title">{{apiInfoModel.mlResultROCRate}}</h4>
+                      <br>
+                  </div>
+                  <div class="card-footer">
+                      <div class="stats">
+                          <i class="material-icons">update</i> Just Updated
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="col-lg-2 col-md-4 col-sm-6">
+              <div class="card card-stats">
+                  <div class="card-header card-header-primary card-header-icon">
+                      <div class="card-icon">
+                          <i class="material-icons">hourglass_empty</i>
+                      </div>
+                      <p class="card-category">Remaining request</p>
+                      <h4 class="card-title">{{apiInfoModel.totalRequestLimit}} / {{apiInfoModel.remainingRequest}}</h4>
+                  </div>
+                  <div class="card-footer">
+                      <div class="stats">
+                          <i class="material-icons">update</i> Just Updated
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-2 col-md-4 col-sm-6">
+              <div class="card card-stats">
+                  <div class="card-header card-header-success card-header-icon">
+                      <div class="card-icon">
+                          <i class="material-icons">sentiment_very_satisfied</i>
+                      </div>
+                      <p class="card-category">Total Pleased Rate</p>
+                      <h4 class="card-title">{{totalPleasedRate}}</h4>
+                      <p></p>
+                  </div>
+                  <div class="card-footer">
+                      <div class="stats">
+                          <i class="material-icons">update</i> Just Updated
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-2 col-md-4 col-sm-6">
+              <div class="card card-stats">
+                  <div class="card-header card-header-warning card-header-icon">
+                      <div class="card-icon">
+                          <i class="material-icons">storage</i>
+
+                      </div>
+                      <p class="card-category">Total Data Count</p>
+                      <h3 class="card-title">{{totalDataCount}}</h3>
+                      <p></p>
+                  </div>
+                  <div class="card-footer">
+                      <div class="stats">
+                          <i class="material-icons">update</i> Just Updated
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-2 col-md-4 col-sm-6">
+              <div class="card card-stats">
+                  <div class="card-header card-header-rose card-header-icon">
+                      <div class="card-icon">
+                          <i class="material-icons">model_training</i>
+
+                      </div>
+                      <p class="card-category">Model Name</p>
+                      <p></p>
+                      <h5 class="card-title">{{apiInfoModel.machineLearningModelName}}</h5>
+                      <br>
+                  </div>
+                  <div class="card-footer">
+                      <div class="stats">
+                          <i class="material-icons">update</i> Just Updated
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="row">
+          <div class="col-md-6">
+              <div class="card card-chart">
+                  <div class="card-header card-header-primary">
+                      <div class="ct-chart" id="statisticAdvGraph"></div>
+                  </div>
+                  <div class="card-body">
+                      <h4 class="card-title">Statistic Graph(%)</h4>
+                  </div>
+                  <div class="card-footer">
+                      <div class="stats">
+                          <i class="material-icons">update</i> Just Updated
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-6">
+              <div class="card card-chart">
+                  <div class="card-header card-header-rose">
+                      <div class="ct-chart" id="dateBasePleasedGraph"></div>
+                  </div>
+                  <div class="card-body">
+                      <h4 class="card-title">Pleased Graph(%)</h4>
+                  </div>
+                  <div class="card-footer">
+                      <div class="stats">
+                          <i class="material-icons">update</i> Just Updated
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+          <div class="col-lg-12 col-md-12">
+              <div class="card">
+                  <div class="card-header card-header-warning">
+                      <h4 class="card-title">Tweets Stats</h4>
+                      <p></p>
+                  </div>
+                  <div class="card-body table-responsive">
+                      <table class="table table-hover">
+                          <thead class="text-warning">
+                              <th>ID</th>
+                              <th>Name</th>
+                              <th>Like Count</th>
+                              <th>Quote Count</th>
+                              <th>Reply Count</th>
+                              <th>Retweet Count</th>
+                              <th>Tweet</th>
+                              <th>is pleased?</th>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let item of clientModels; index as i;">
+                                  <td>{{i}}</td>
+                                  <td>{{item.name}}</td>
+                                  <td>{{item.likeCount}}</td>
+                                  <td>{{item.quoteCount}}</td>
+                                  <td>{{item.replyCount}}</td>
+                                  <td>{{item.retweetCount}}</td>
+                                  <td>{{item.original_text}}</td>
+                                  <td>{{item.user_sentiment}}</td>
+                              </tr>
+
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+<app-footer></app-footer>
