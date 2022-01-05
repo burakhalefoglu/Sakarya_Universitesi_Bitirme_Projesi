@@ -20,6 +20,6 @@ class ConsumerController:
                     continue
                 json_data = json.loads(msg.value().decode("utf-8"))
                 logger.send_info_log("Consumer sent to mongo: {}".format(json_data))
-                #TODO: Send to mongodb
+                #TODO: Send to mongodb -> https://www.w3schools.com/python/python_mongodb_insert.asp
             except Exception as err:
                 logger.send_err_log("Consumer customer error: {}".format(str(err)))

@@ -16,14 +16,38 @@ spec:
         app: kafka-stream
     spec:
       containers:
-      - name: app
+      - name: kafka-stream
         image: registry.digitalocean.com/appneuron-digitalocean/kafka-stream
         env:
-        - name: logstash_host
+        - name: LOGSTASH_HOST
           valueFrom:
             configMapKeyRef:
               name: app-conn
-              key: host
+              key: LOGSTASH_HOST
+        - name: CONSUMER_KEY
+          valueFrom:
+            configMapKeyRef:
+              name: app-conn
+              key: CONSUMER_KEY
+        - name: CONSUMER_SECRET
+          valueFrom:
+            configMapKeyRef:
+              name: app-conn
+              key: CONSUMER_SECRET
+        - name: ACCESS_TOKEN_KEY
+          valueFrom:
+            configMapKeyRef:
+              name: app-conn
+              key: ACCESS_TOKEN_KEY
+        - name: ACCESS_TOKEN_KEY_SECRET
+          valueFrom:
+            configMapKeyRef:
+              name: app-conn
+              key: ACCESS_TOKEN_KEY_SECRET
+        - name: KAFKA_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: app-conn
+              key: KAFKA_HOST
         ports:
         - containerPort: 80
-

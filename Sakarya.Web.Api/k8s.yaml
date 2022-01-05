@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-api
+  namespace: test-development
+  labels:
+    app: web-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-api
+  template:
+    metadata:
+      labels:
+        app: web-api
+    spec:
+      containers:
+      - name: web-api
+        image: registry.digitalocean.com/appneuron-digitalocean/web-api
+        env:
+        - name: LOGSTASH_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: app-conn
+              key: LOGSTASH_HOST
+        ports:
+        - containerPort: 80
