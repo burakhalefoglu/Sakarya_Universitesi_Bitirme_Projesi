@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logstash-config
+data:
+  logstash.yml: |-
+    http.host: "0.0.0.0"
+    path.config: /usr/share/logstash/pipeline
+  logstash.conf: |-
+    input {
+      tcp {
+        port => 5000
+      }
+    }
+    filter {
+    }
+    output {
+      elasticsearch {
+        hosts => [ "${ES_HOSTS}" ]
+        user => "${ES_USER}"
+        password => "${ES_PASSWORD}"
+      }
+    }
