@@ -64,12 +64,12 @@ namespace Tests.Business.Handlers
                 {
                     new()
                     {
-                        Name = "ABC***"
+                        name = "ABC***"
                     },
                     
                     new()
                     {
-                        Name = "CDE***"
+                        name = "CDE***"
                     }
 
                 }.AsQueryable());
@@ -94,12 +94,12 @@ namespace Tests.Business.Handlers
                 {
                     new()
                     {
-                        Name = "ABC***"
+                        name = "ABC***"
                     },
 
                     new()
                     {
-                        Name = "CDE***"
+                        name = "CDE***"
                     }
 
                 }.AsQueryable());
@@ -122,21 +122,21 @@ namespace Tests.Business.Handlers
                 {
                     new()
                     {
-                        Name = "ABC***"
+                        name = "ABC***"
                     },
 
                     new()
                     {
-                        Name = "CDE***"
+                        name = "CDE***"
                     },
 
                     new()
                     {
-                        Name = "GHE***"
+                        name = "GHE***"
                     },
                     new()
                     {
-                        Name = "XYZ***"
+                        name = "XYZ***"
                     },
 
 
@@ -147,7 +147,7 @@ namespace Tests.Business.Handlers
                 {
                     new()
                     {
-                        Name = "ABC***"
+                        name = "ABC***"
                     }
 
                 }.AsQueryable());
@@ -176,21 +176,21 @@ namespace Tests.Business.Handlers
                 {
                     new()
                     {
-                        Name = "ABC***"
+                        name = "ABC***"
                     },
 
                     new()
                     {
-                        Name = "CDE***"
+                        name = "CDE***"
                     },
 
                     new()
                     {
-                        Name = "GHE***"
+                        name = "GHE***"
                     },
                     new()
                     {
-                        Name = "XYZ***"
+                        name = "XYZ***"
                     },
 
 
@@ -204,7 +204,7 @@ namespace Tests.Business.Handlers
                 {
                     new()
                     {
-                        Name = "ABC***"
+                        name = "ABC***"
                     }
 
                 }.AsQueryable());

@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-stream
+  namespace: test-development
+  labels:
+    app: kafka-stream
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-stream
+  template:
+    metadata:
+      labels:
+        app: kafka-stream
+    spec:
+      containers:
+      - name: app
+        image: registry.digitalocean.com/appneuron-digitalocean/kafka-stream
+        env:
+        - name: logstash_host
+          valueFrom:
+            configMapKeyRef:
+              name: app-conn
+              key: host
+        ports:
+        - containerPort: 80
+

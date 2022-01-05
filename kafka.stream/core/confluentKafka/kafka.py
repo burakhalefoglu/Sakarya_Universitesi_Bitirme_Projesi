@@ -1,41 +1,30 @@
 from confluent_kafka.admin import AdminClient, NewTopic
 from confluent_kafka import Producer, Consumer
+from helper.logger import AsynchronousLogstash
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
-
+kafka_host = os.environ.get('kafka_host')
+logger = AsynchronousLogstash()
+ 
 class Kafka:
     def __init__(self):
-        self.adminClient = AdminClient({"bootstrap.servers": "159.223.22.116:9092"})
+        self.adminClient = AdminClient({"bootstrap.servers": kafka_host + ":9092"})
 
     def delivery_report(self, err, msg):
         try:
             if err is not None:
-                print("Message delivery failed: {}".format(err))
+                logger.send_err_log("Message delivery failed: {}".format(err))
             else:
-                print(
-                    "Message delivered to {} [{}]".format(
-                        msg.topic(), msg.partition(), msg.value()
-                    )
-                )
+                logger.send_info_log("Message delivered to {} [{}]".format(
+                        msg.topic(), msg.partition(), msg.value()))
+
         except Exception as err:
-            print(err.__doc__)
-
-    def create_topics(self, topic: str, num_partitions: int):
-        new_topics = [
-            NewTopic(topic=topic, num_partitions=num_partitions, replication_factor=1)
-        ]
-        fs = self.adminClient.create_topics(new_topics)
-        for topic, f in fs.items():
-            try:
-                f.result()
-                print("Topic {} created".format(topic))
-            except Exception as e:
-                print("Failed to create topic {}: {}".format(topic, e))
-
-    def list_topics(self):
-        print(self.adminClient.list_topics().topics)
+            logger.send_err_log("kafka failed: {}".format(err.__doc__))
 
     def produce_message(self, topic: str, key, value):
-        producer = Producer({"bootstrap.servers": "159.223.22.116:9092"})
+        producer = Producer({"bootstrap.servers": kafka_host + ":9092"})
         producer.poll(0)
         try:
             producer.produce(
@@ -43,12 +32,12 @@ class Kafka:
             )
             producer.flush()
         except Exception as err:
-            print("Error:  {}".format(err.__doc__))
+            logger.send_err_log("kafka failed: {}".format(err.__doc__))
 
     def create_consumer(self, topic: str, group_id: str):
         consumer = Consumer(
             {
-                "bootstrap.servers": "159.223.22.116:9092",
+                "bootstrap.servers": kafka_host + ":9092",
                 "group.id": group_id,
                 "auto.offset.reset": "earliest",
             }
