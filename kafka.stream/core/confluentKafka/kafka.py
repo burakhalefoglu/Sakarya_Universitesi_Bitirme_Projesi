@@ -5,7 +5,7 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-kafka_host = os.environ.get('kafka_host')
+kafka_host = os.environ.get('KAFKA_HOST')
 logger = AsynchronousLogstash()
  
 class Kafka:
@@ -40,6 +40,7 @@ class Kafka:
                 "bootstrap.servers": kafka_host + ":9092",
                 "group.id": group_id,
                 "auto.offset.reset": "earliest",
+                'enable.auto.commit': False
             }
         )
 

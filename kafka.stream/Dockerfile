@@ -14,13 +14,14 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . /kafka-stream/src/app
 
 # Application Environment variables
-ENV logstash_host localhost
-ENV logstash_port 5000
-ENV consumer_key test
-ENV consumer_secret test
-ENV access_token_key test
-ENV access_token_secret test
-ENV kafka_host localhost
+ENV LOGSTASH_HOST localhost
+ENV CONSUMER_KEY test
+ENV CONSUMER_SECRET test
+ENV ACCESS_TOKEN_KEY test
+ENV ACCESS_TOKEN_KEY_SECRET test
+ENV KAFKA_HOST localhost
+ENV MONGODB_HOST localhost
+ENV MONGODB_PASSWORD test
 
 # Setting Persistent data
 VOLUME ["/stream-data"]

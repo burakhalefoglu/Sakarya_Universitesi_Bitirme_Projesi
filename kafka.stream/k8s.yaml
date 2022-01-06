@@ -26,28 +26,38 @@ spec:
               key: LOGSTASH_HOST
         - name: CONSUMER_KEY
           valueFrom:
-            configMapKeyRef:
-              name: app-conn
-              key: CONSUMER_KEY
+            secretKeyRef:
+              name: app-secret
+              key: CONSUMER_KEY 
         - name: CONSUMER_SECRET
           valueFrom:
-            configMapKeyRef:
-              name: app-conn
+            secretKeyRef:
+              name: app-secret
               key: CONSUMER_SECRET
         - name: ACCESS_TOKEN_KEY
           valueFrom:
-            configMapKeyRef:
-              name: app-conn
+            secretKeyRef:
+              name: app-secret
               key: ACCESS_TOKEN_KEY
         - name: ACCESS_TOKEN_KEY_SECRET
           valueFrom:
-            configMapKeyRef:
-              name: app-conn
+            secretKeyRef:
+              name: app-secret
               key: ACCESS_TOKEN_KEY_SECRET
         - name: KAFKA_HOST
           valueFrom:
             configMapKeyRef:
               name: app-conn
               key: KAFKA_HOST
+        - name: MONGODB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: app-conn
+              key: MONGODB_HOST
+        - name: MONGODB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mongo-mongodb
+              key: mongodb-root-password
         ports:
         - containerPort: 80

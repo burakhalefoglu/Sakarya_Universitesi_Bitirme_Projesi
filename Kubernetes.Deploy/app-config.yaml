@@ -5,8 +5,5 @@ metadata:
   namespace: test-development
 data:
   LOGSTASH_HOST: "logstash.default.svc.cluster.local"
-  CONSUMER_KEY: test
-  CONSUMER_SECRET: test
-  ACCESS_TOKEN_KEY: test
-  ACCESS_TOKEN_KEY_SECRET: test
-  KAFKA_HOST: localhost
+  KAFKA_HOST: "my-cluster-kafka-bootstrap.kafka.svc.cluster.local"
+  MONGODB_HOST: "mongo-mongodb.test-development.svc.cluster.local"

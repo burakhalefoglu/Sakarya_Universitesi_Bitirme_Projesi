@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim as base
+FROM mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim as runtime
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
@@ -18,7 +18,7 @@ RUN dotnet build "WebAPI.csproj" -c Release -o /app/build
 FROM build AS publish
 RUN dotnet publish "WebAPI.csproj" -c Release -o /app/build
 
-FROM base AS final
+FROM runtime AS final
 WORKDIR /app
 COPY --from=publish /app/build .
 ENV ASPNETCORE_URLS="https://*:44375"

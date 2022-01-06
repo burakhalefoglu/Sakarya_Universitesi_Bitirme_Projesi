@@ -5,11 +5,10 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-host = os.environ.get('logstash_host')
-port = os.environ.get('logstash_port')
+host = os.environ.get('LOGSTASH_HOST')
 test_logger = logging.getLogger('python-logstash-logger')
 test_logger.setLevel(logging.DEBUG)
-async_handler = AsynchronousLogstashHandler(host, int(port), database_path=None)
+async_handler = AsynchronousLogstashHandler(host, 5000, database_path=None)
 test_logger.addHandler(async_handler)
 
 
