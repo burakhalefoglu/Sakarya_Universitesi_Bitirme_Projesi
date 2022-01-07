@@ -18,7 +18,9 @@ namespace Core.DataAccess.MongoDb.Concrete.Configurations
         /// </summary>
         private MongoClientSettings MongoClientSettings { get; }
 
-        public string ConnectionString { get; set; }
+        public string user { get; set; }
+        public string password { get; set; }
+        public string host { get; set; }
         public string DatabaseName { get; set; }
 
         public MongoClientSettings GetMongoClientSettings()

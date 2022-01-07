@@ -19,16 +19,9 @@ namespace WebAPI
         /// <summary>
         /// </summary>
         /// <param name="args"></param>
-#pragma warning disable 1998
-        public static async Task Main(string[] args)
-#pragma warning restore 1998
+        public static void Main(string[] args)
         {
-            var result = CreateHostBuilder(args).Build().RunAsync();
-            var operationClaimRepository = ServiceTool.ServiceProvider.GetService<IOperationClaimRepository>();
-            var createOcResult = new CreateOperationClaimsInternalCommandHandler(operationClaimRepository).Handle(
-                new CreateOperationClaimsInternalCommand(), new CancellationToken());
-            result.Wait();
-            createOcResult.Wait();
+            CreateHostBuilder(args).Build().Run();
         }
 
         /// <summary>

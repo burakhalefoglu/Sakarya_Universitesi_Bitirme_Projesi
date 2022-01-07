@@ -1,7 +1,6 @@
 FROM mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim as runtime
 WORKDIR /app
 EXPOSE 80
-EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim as build
 WORKDIR /src
@@ -22,7 +21,7 @@ RUN dotnet publish "WebAPI.csproj" -c Release -o /app/build
 FROM runtime AS final
 WORKDIR /app
 COPY --from=publish /app/build .
-ENV ASPNETCORE_URLS="https://*:44375"
+#ENV ASPNETCORE_URLS="http://*:44375"
 ENV ASPNETCORE_ENVIRONMENT Staging
 ENV ASPNETCORE_ENVIRONMENT Staging
 ENV MongoDbSettings:User root

@@ -17,12 +17,37 @@ spec:
     spec:
       containers:
       - name: web-api
-        image: registry.digitalocean.com/appneuron-digitalocean/web-api
+        image: registry.digitalocean.com/appneuron-digitalocean/dotnetapi:0.1
+        imagePullPolicy: Always
         env:
-        - name: LOGSTASH_HOST
+        - name: SeriLogConfigurations.LogstashConfiguration.Host
           valueFrom:
             configMapKeyRef:
               name: app-conn
               key: LOGSTASH_HOST
+        - name: MongoDbSettings.Host
+          valueFrom:
+            configMapKeyRef:
+              name: app-conn
+              key: MONGODB_HOST
+        - name: MongoDbSettings.Password
+          valueFrom:
+            secretKeyRef:
+              name: mongo-mongodb
+              key: mongodb-root-password
         ports:
         - containerPort: 80
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-api-service
+  namespace: test-development
+spec:
+  selector:
+    app: web-api
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80

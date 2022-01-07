@@ -2,7 +2,7 @@ import time
 import snscrape.modules.twitter as sntwitter
 import pymongo
 
-myclient = pymongo.MongoClient("mongodb://root:CqNOzJQ1Zed2Mvi@143.244.211.5:27017/")
+myclient = pymongo.MongoClient("mongodb://root:xxxxxxx@xxxxxxx:27017/")
 mydb = myclient["sakarya"]
 mycol = mydb["sakarya_raw_tweets"]
 

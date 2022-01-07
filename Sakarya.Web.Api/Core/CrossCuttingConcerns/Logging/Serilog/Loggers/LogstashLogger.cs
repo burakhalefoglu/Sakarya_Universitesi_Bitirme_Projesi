@@ -18,11 +18,13 @@ namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
 
             var logConfig = configuration.GetSection("SeriLogConfigurations:LogstashConfiguration")
                 .Get<LogstashConfiguration>() ?? throw new Exception(SerilogMessages.NullOptionsMessage);
-
+                
+            var host = logConfig.host;
+            var url = $"http://{host}:5000";
             var seriLogConfig = new LoggerConfiguration()
                 .WriteTo
                 .DurableHttpUsingFileSizeRolledBuffers(
-                    logConfig.Url,
+                    url,
                     batchFormatter: new ArrayBatchFormatter(),
                     textFormatter: new ElasticsearchJsonFormatter()
                 )

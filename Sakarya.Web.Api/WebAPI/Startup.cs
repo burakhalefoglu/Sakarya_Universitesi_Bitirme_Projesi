@@ -154,7 +154,7 @@ namespace WebAPI
 
             app.UseStaticFiles();
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            //app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }

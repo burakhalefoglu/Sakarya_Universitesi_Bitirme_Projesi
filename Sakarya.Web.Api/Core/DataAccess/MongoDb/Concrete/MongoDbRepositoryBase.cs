@@ -21,9 +21,10 @@ namespace Core.DataAccess.MongoDb.Concrete
             CollectionName = collectionName;
 
             ConnectionSettingControl(mongoConnectionSetting);
+            var connStr = $"mongodb://{mongoConnectionSetting.user}:{mongoConnectionSetting.password}@{mongoConnectionSetting.host}:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false";
 
             var client = mongoConnectionSetting.GetMongoClientSettings() == null
-                ? new MongoClient(mongoConnectionSetting.ConnectionString)
+                ? new MongoClient()
                 : new MongoClient(mongoConnectionSetting.GetMongoClientSettings());
 
             var database = client.GetDatabase(mongoConnectionSetting.DatabaseName);
@@ -159,7 +160,8 @@ namespace Core.DataAccess.MongoDb.Concrete
                 throw new Exception(DocumentDbMessages.NullOremptyMessage);
 
             if (string.IsNullOrEmpty(CollectionName) ||
-                string.IsNullOrEmpty(settings.ConnectionString) ||
+                string.IsNullOrEmpty(settings.password) ||
+                string.IsNullOrEmpty(settings.host) ||
                 string.IsNullOrEmpty(settings.DatabaseName))
                 throw new Exception(DocumentDbMessages.NullOremptyMessage);
         }
