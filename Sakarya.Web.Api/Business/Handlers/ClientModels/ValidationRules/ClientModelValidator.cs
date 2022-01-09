@@ -1,5 +1,3 @@
-﻿using FluentValidation;
-
-namespace Business.Handlers.ClientModels.ValidationRules
+﻿namespace Business.Handlers.ClientModels.ValidationRules
 {
 }

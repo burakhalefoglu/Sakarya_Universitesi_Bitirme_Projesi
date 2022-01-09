@@ -47,7 +47,8 @@ namespace Business.Handlers.Authorizations.Commands
             [CacheRemoveAspect("Get")]
             [LogAspect(typeof(LogstashLogger))]
             [TransactionScopeAspectAsync]
-            public async Task<IDataResult<AccessToken>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+            public async Task<IDataResult<AccessToken>> Handle(RegisterUserCommand request,
+                CancellationToken cancellationToken)
             {
                 var userExits = await _userRepository.GetByFilterAsync(u => u.Email == request.Email);
 

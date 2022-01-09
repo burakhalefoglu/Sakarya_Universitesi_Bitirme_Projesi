@@ -18,7 +18,7 @@ namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
 
             var logConfig = configuration.GetSection("SeriLogConfigurations:LogstashConfiguration")
                 .Get<LogstashConfiguration>() ?? throw new Exception(SerilogMessages.NullOptionsMessage);
-                
+
             var host = logConfig.host;
             var url = $"http://{host}:5000";
             var seriLogConfig = new LoggerConfiguration()

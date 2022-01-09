@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
-import { AuthService } from './components/auth/login/services/auth.service';
+import { RouteService } from './services/route.service';
 
 export let browserRefresh = false;
 
@@ -16,11 +16,11 @@ export class AppComponent  {
   isRefresh: boolean;
 
   constructor(
-    private authService: AuthService,
-    private router: Router
-  ) {
-    if (!this.authService.loggedIn()) {
-      this.authService.logOut();
+   private router: Router,
+   private routeService: RouteService
+  ) { 
+    if (!this.routeService.loggedIn()) {
+      this.routeService.logOut();
       this.router.navigateByUrl('/auth');
     }
     this.router.navigateByUrl('/dashboard')
@@ -34,7 +34,7 @@ export class AppComponent  {
 
 
   isLoggedIn(): boolean {
-    return this.authService.loggedIn();
+    return this.routeService.loggedIn();
   }
 
 }

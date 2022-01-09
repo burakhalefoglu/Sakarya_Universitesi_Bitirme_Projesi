@@ -5,7 +5,7 @@ import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import PerfectScrollbar from 'perfect-scrollbar';
 import * as $ from 'jquery';
-import { AuthService } from 'app/components/auth/login/services/Auth.service';
+import { RouteService } from 'app/services/route.service';
 
 
 @Component({
@@ -21,12 +21,12 @@ export class AdminLayoutComponent implements OnInit {
 
     constructor(public location: Location,
                 private router: Router,
-                private authService: AuthService ) {
+                private routeService: RouteService ) {
     }
 
     isLoggedIn(): boolean {
 
-        return this.authService.loggedIn();
+        return this.routeService.loggedIn();
     }
 
     ngOnInit() {

@@ -4,13 +4,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Business.Constants;
 using Business.Handlers.ClientModels.Queries;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using FluentAssertions;
 using MediatR;
-using MongoDB.Bson;
 using Moq;
 using NUnit.Framework;
 using static Business.Handlers.ClientModels.Queries.GetLastClientsByCountQuery;
@@ -31,9 +29,9 @@ namespace Tests.Business.Handlers
 
 
             _getLastClientsByCountQueryHandler =
-                new GetLastClientsByCountQueryHandler( _clientModelRepository.Object, _mediator.Object);
+                new GetLastClientsByCountQueryHandler(_clientModelRepository.Object, _mediator.Object);
             _getTotalClientCountQueryHandler =
-                new GetTotalClientCountQueryHandler( _clientModelRepository.Object, _mediator.Object);
+                new GetTotalClientCountQueryHandler(_clientModelRepository.Object, _mediator.Object);
             _getPositiveSentimentRateQueryHandler =
                 new GetPositiveSentimentRateQueryHandler(_clientModelRepository.Object, _mediator.Object);
             _getSentimentRateByDateFilterQueryHandler =
@@ -54,7 +52,7 @@ namespace Tests.Business.Handlers
             //Arrange
             var query = new GetLastClientsByCountQuery
             {
-               Count = 2
+                Count = 2
             };
 
             _clientModelRepository.Setup(x =>
@@ -66,12 +64,11 @@ namespace Tests.Business.Handlers
                     {
                         name = "ABC***"
                     },
-                    
+
                     new()
                     {
                         name = "CDE***"
                     }
-
                 }.AsQueryable());
 
             //Act
@@ -101,7 +98,6 @@ namespace Tests.Business.Handlers
                     {
                         name = "CDE***"
                     }
-
                 }.AsQueryable());
 
             //Act
@@ -111,6 +107,7 @@ namespace Tests.Business.Handlers
             x.Success.Should().BeTrue();
             x.Data.Should().Be(2);
         }
+
         [Test]
         public async Task GetPositiveSentimentRateQuery_GetQueries_Success()
         {
@@ -137,19 +134,16 @@ namespace Tests.Business.Handlers
                     new()
                     {
                         name = "XYZ***"
-                    },
-
-
+                    }
                 }.AsQueryable());
 
-                _clientModelRepository.Setup(x => x.GetListAsync(a => a.user_sentiment == 1))
+            _clientModelRepository.Setup(x => x.GetListAsync(a => a.user_sentiment == 1))
                 .ReturnsAsync(new List<ClientModel>
                 {
                     new()
                     {
                         name = "ABC***"
                     }
-
                 }.AsQueryable());
             //Act
             var x = await _getPositiveSentimentRateQueryHandler.Handle(query, new CancellationToken());
@@ -191,22 +185,19 @@ namespace Tests.Business.Handlers
                     new()
                     {
                         name = "XYZ***"
-                    },
-
-
+                    }
                 }.AsQueryable());
 
             _clientModelRepository.Setup(a =>
                     a.GetListAsync(x => x.user_sentiment == 1
-                                          && x.createdAt >= query.startDate
-                                          && x.createdAt <= query.finishDate))
+                                        && x.createdAt >= query.startDate
+                                        && x.createdAt <= query.finishDate))
                 .ReturnsAsync(new List<ClientModel>
                 {
                     new()
                     {
                         name = "ABC***"
                     }
-
                 }.AsQueryable());
 
             //Act
@@ -216,6 +207,5 @@ namespace Tests.Business.Handlers
             x.Success.Should().BeTrue();
             x.Data.Should().Be(25);
         }
-
     }
 }

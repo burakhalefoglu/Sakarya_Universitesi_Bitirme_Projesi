@@ -61,10 +61,7 @@ namespace Business.Helpers
 
         public static bool IsPhoneValid(this string mobilePhone)
         {
-            if (string.IsNullOrWhiteSpace(mobilePhone))
-            {
-                return false;
-            }
+            if (string.IsNullOrWhiteSpace(mobilePhone)) return false;
 
             mobilePhone = Regex.Replace(mobilePhone, "[^0-9]", "");
             return mobilePhone.StartsWith("05") && mobilePhone.Length == 11;

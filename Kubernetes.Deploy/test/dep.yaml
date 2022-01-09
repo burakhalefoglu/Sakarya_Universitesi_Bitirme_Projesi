@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: certmanager-app
+  name: certmanager-app-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: certmanager-app
+  template:
+    metadata:
+      labels:
+        app: certmanager-app
+    spec:
+      containers:
+        - image: akshit8/certmanager-app
+          name: certmanager-app
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: certmanager-app
+  name: certmanager-app-service
+spec:
+  ports:
+    - protocol: TCP
+      name: http
+      port: 80
+      targetPort: 8000
+  selector:
+    app: certmanager-app
+  type: LoadBalancer

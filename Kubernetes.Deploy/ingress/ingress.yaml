@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+  name:  web-api-app-ingress
+  namespace: test-development
+
+spec:
+  tls:
+    - hosts:
+        - webapi.sakaryaprojwebapi.xyz
+      secretName:  web-api-app-tls
+  defaultBackend:
+    service:
+      name: web-api-service
+      port:
+        number: 80
+  rules:
+    - host: webapi.sakaryaprojwebapi.xyz
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend: 
+              service:
+                name: web-api-service
+                port:
+                  number: 80

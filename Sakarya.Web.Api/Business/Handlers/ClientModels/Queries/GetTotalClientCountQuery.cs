@@ -1,20 +1,17 @@
-﻿
-using System.Linq;
-using Business.BusinessAspects;
-using Core.Utilities.Results;
-using DataAccess.Abstract;
-using Entities.Concrete;
-using MediatR;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+using Business.BusinessAspects;
 using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+using Core.Utilities.Results;
+using DataAccess.Abstract;
+using MediatR;
+
 namespace Business.Handlers.ClientModels.Queries
 {
-
     public class GetTotalClientCountQuery : IRequest<IDataResult<int>>
     {
-
         public class
             GetTotalClientCountQueryHandler : IRequestHandler<GetTotalClientCountQuery, IDataResult<int>>
         {
@@ -32,7 +29,6 @@ namespace Business.Handlers.ClientModels.Queries
             public async Task<IDataResult<int>> Handle(GetTotalClientCountQuery request,
                 CancellationToken cancellationToken)
             {
-
                 return new SuccessDataResult<int>(_clientModelRepository.GetListAsync().Result.Count());
             }
         }

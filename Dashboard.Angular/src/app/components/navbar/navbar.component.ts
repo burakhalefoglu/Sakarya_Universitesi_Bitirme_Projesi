@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { RouteService } from 'app/services/route.service';
 import { AuthService } from '../auth/login/services/Auth.service';
 
 
@@ -11,15 +12,16 @@ styleUrls: ['./navbar.component.css']
 export class NavbarComponent implements OnInit {
 
 userName: string;
-constructor(private authService: AuthService, private router: Router) {}
+constructor(private routeService: RouteService, 
+    private authService: AuthService, private router: Router) {}
 
 isLoggedIn(): boolean {
 
-return this.authService.loggedIn();
+return this.routeService.loggedIn();
 }
 
 logOut() {
-this.authService.logOut();
+this.routeService.logOut();
 this.router.navigateByUrl('/auth');
 
 }

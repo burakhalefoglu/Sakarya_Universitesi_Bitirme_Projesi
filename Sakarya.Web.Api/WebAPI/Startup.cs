@@ -51,15 +51,13 @@ namespace WebAPI
                     options.JsonSerializerOptions.IgnoreNullValues = true;
                 });
 
-            var corsPolicies = Configuration.GetSection("CorsPolicies").Get<string[]>();
-            services.AddCors(options =>
+            //var corsPolicies = Configuration.GetSection("CorsPolicies").Get<string[]>();
+            services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
             {
-                options.AddPolicy("CorsPolicy",
-                    builder => builder.WithOrigins(corsPolicies)
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials());
-            });
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
 
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
@@ -154,7 +152,7 @@ namespace WebAPI
 
             app.UseStaticFiles();
 
-            //app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }

@@ -20,14 +20,18 @@ namespace Core.DataAccess.MongoDb.Concrete
         {
             CollectionName = collectionName;
 
-            ConnectionSettingControl(mongoConnectionSetting);
-            var connStr = $"mongodb://{mongoConnectionSetting.user}:{mongoConnectionSetting.password}@{mongoConnectionSetting.host}:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false";
+            //ConnectionSettingControl(mongoConnectionSetting);
+            //var connStr =
+            //    $"mongodb://{mongoConnectionSetting.user}:{mongoConnectionSetting.password}@{mongoConnectionSetting.host}:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false";
 
-            var client = mongoConnectionSetting.GetMongoClientSettings() == null
-                ? new MongoClient()
-                : new MongoClient(mongoConnectionSetting.GetMongoClientSettings());
+            var connStr = "mongodb://root:CqNOzJQ1Zed2Mvi@137.184.246.8:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false";
+            var client = new MongoClient(connStr);
 
-            var database = client.GetDatabase(mongoConnectionSetting.DatabaseName);
+            //var client = mongoConnectionSetting.GetMongoClientSettings() == null
+            //    ? new MongoClient()
+            //    : new MongoClient(mongoConnectionSetting.GetMongoClientSettings());
+            /*mongoConnectionSetting.DatabaseName*/
+            var database = client.GetDatabase("sakarya");
             _collection = database.GetCollection<T>(collectionName);
         }
 
@@ -107,7 +111,8 @@ namespace Core.DataAccess.MongoDb.Concrete
             });
         }
 
-        public virtual async Task<IQueryable<T>> GetListByLimitAsync(int limit, Expression<Func<T, bool>> predicate = null)
+        public virtual async Task<IQueryable<T>> GetListByLimitAsync(int limit,
+            Expression<Func<T, bool>> predicate = null)
         {
             return await Task.Run(() =>
             {

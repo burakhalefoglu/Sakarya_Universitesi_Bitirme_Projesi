@@ -42,8 +42,7 @@ namespace Business.Internals.Handlers.OperationClaims
                     "GetSentimentRateByDateFilterQuery",
                     "GetLastClientsByCountQuery",
                     "GetTotalClientCountQuery",
-                    "GetApiInfoModelByTypeQuery",
-                    
+                    "GetApiInfoModelByTypeQuery"
                 };
                 var operationClaims = new List<OperationClaim>();
 

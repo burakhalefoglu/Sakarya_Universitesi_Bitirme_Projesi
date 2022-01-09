@@ -30,7 +30,7 @@ namespace Core.DataAccess
 
         Task<IQueryable<T>> GetListAsync(Expression<Func<T, bool>> predicate = null);
 
-        Task<IQueryable<T>> GetListByLimitAsync(int limit, Expression<Func<T, bool>> predicate = null); 
+        Task<IQueryable<T>> GetListByLimitAsync(int limit, Expression<Func<T, bool>> predicate = null);
 
         Task<T> GetByFilterAsync(Expression<Func<T, bool>> predicate);
 

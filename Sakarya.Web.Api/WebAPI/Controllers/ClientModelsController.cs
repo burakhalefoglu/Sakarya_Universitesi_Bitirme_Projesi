@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Business.Handlers.ClientModels.Queries;
 using Core.Utilities.Results;
@@ -28,10 +27,11 @@ namespace WebAPI.Controllers
         [HttpGet("getlastclientsbycount")]
         public async Task<IActionResult> GetLastClientsByCount(int count)
         {
-            var result = await Mediator.Send(new GetLastClientsByCountQuery{ Count = count });
+            var result = await Mediator.Send(new GetLastClientsByCountQuery {Count = count});
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
+
         /// <summary>
         ///     List ClientModels
         /// </summary>
@@ -86,6 +86,5 @@ namespace WebAPI.Controllers
             if (result.Success) return Ok(result);
             return BadRequest(result);
         }
-
     }
 }

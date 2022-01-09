@@ -9,3 +9,4 @@ spec:
     - port: 5000
       name: 'tcp'
       targetPort: 5000
+  type: LoadBalancer

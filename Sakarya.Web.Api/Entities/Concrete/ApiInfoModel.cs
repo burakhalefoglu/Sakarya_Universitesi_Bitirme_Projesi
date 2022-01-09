@@ -24,5 +24,4 @@ namespace Entities.Concrete
         public int TotalData { get; set; }
         public string MachineLearningModelName { get; set; }
     }
-
 }

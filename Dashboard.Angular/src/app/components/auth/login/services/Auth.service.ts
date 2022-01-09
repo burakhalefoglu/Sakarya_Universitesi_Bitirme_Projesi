@@ -51,13 +51,4 @@ export class AuthService {
     return this.userName;
   }
 
-  logOut() {
-    this.storageService.removeToken();
-  }
-
-  loggedIn(): boolean {
-
-    const isExpired = this.jwtHelper.isTokenExpired(this.storageService.getToken());
-    return !isExpired;
-  }
 }

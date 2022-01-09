@@ -1,7 +1,3 @@
-﻿
-using FluentValidation;
-
-namespace Business.Handlers.ApiInfoModels.ValidationRules
+﻿namespace Business.Handlers.ApiInfoModels.ValidationRules
 {
-    
 }

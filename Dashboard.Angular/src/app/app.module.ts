@@ -7,8 +7,6 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AdminLayoutComponent } from './components/layouts/admin-layout/admin-layout.component';
-import { AlertifyService } from './services/alertify.service';
-import { AuthService } from './components/auth/login/services/auth.service';
 import { LocalStorageService } from './services/local-storage.service';
 import { LoginGuard } from './guards/login-guard';
 import { AuthInterceptorService } from './interceptors/auth-interceptor.service';
@@ -32,6 +30,11 @@ import {FooterComponent} from './components/footer/footer.component';
 import {NavbarComponent} from './components/navbar/navbar.component';
 import {RegisterComponent} from './components/auth/register/register.component';
 import {AuthComponent} from './components/auth/auth.component';
+import { AuthService } from './components/auth/login/services/Auth.service';
+import { AlertifyService } from './services/Alertify.service';
+import { DashboardService } from './components/dashboard/service/dashboard.service';
+import { RegisterService } from './components/auth/register/services/Register.service';
+import { RouteService } from './services/route.service';
 
 
 export function tokenGetter() {
@@ -73,20 +76,20 @@ export function tokenGetter() {
       }
     })],
   declarations: [
-    AppComponent,
     AdminLayoutComponent,
     DashboardComponent,
     LoginComponent,
     FooterComponent,
     NavbarComponent,
     RegisterComponent,
-    AuthComponent
+    AuthComponent,
+    AppComponent
   ],
   exports: [
     FooterComponent,
     NavbarComponent,
   ],
-  providers: [AlertifyService, AuthService, LocalStorageService, LoginGuard, AuthInterceptorService,
+  providers: [LocalStorageService, RouteService, AuthService, RegisterService, DashboardService, AlertifyService, LoginGuard, AuthInterceptorService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
